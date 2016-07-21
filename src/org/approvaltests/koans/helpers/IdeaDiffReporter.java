@@ -3,18 +3,24 @@ package org.approvaltests.koans.helpers;
 import org.approvaltests.reporters.GenericDiffReporter;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by cortman on 7/21/16.
  */
 public class IdeaDiffReporter extends GenericDiffReporter {
-    private static final String DIFF_PROGRAM = "/Applications/kdiff3.app/Contents/MacOS/kdiff3";
-    static final String MESSAGE = MessageFormat.format("Unable to find KDiff3 at {0}", new Object[]{"/Applications/kdiff3.app/Contents/MacOS/kdiff3"});
-    public static final org.approvaltests.reporters.macosx.KDiff3Reporter INSTANCE = new org.approvaltests.reporters.macosx.KDiff3Reporter();
+    private static final String DIFF_PROGRAM = "/usr/local/bin/idea";
+    static final String MESSAGE = MessageFormat.format("Unable to find Idea at {0}", new Object[]{DIFF_PROGRAM});
+    public static final IdeaDiffReporter INSTANCE = new IdeaDiffReporter();
+    public static List<String> EXTENSIONS = Arrays.asList(new String[]{
+        ".txt", ".csv", ".htm", ".html", ".xml", ".eml", ".java", ".css", ".js",
+        ".png", ".gif", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"
+    });
 
     public IdeaDiffReporter() {
-        super("/usr/local/bin/idea", "diff %s %s", MESSAGE, GenericDiffReporter.TEXT_FILE_EXTENSIONS);
+        super(DIFF_PROGRAM, "diff %s %s", MESSAGE, EXTENSIONS);
     }
 
     @Override
